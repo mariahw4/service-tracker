@@ -1,20 +1,24 @@
 import React from "react";
-// import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-// import {
-//     ApolloClient,
-//     ApolloProvider,
-//     InMemoryCache,
-//     createHttpLink,
-// } from "@apollo/client";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  // createHttpLink,
+} from "@apollo/client";
 // import { setContext } from "@apollo/client/link/context";
 
-
 // import logo from './logo.svg';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import Navigation from './components/navbar';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import Navigation from "./components/navbar";
 import Dashboard from "./pages/dashboard";
 import Homepage from "./pages/homepage";
+
+const client = new ApolloClient({
+  uri: "/graphql",
+  cache: new InMemoryCache(),
+});
 
 // const httpLink = createHttpLink({
 //   uri: "/graphql",
@@ -41,46 +45,39 @@ import Homepage from "./pages/homepage";
 
 function App() {
   return (
-//     <ApolloProvider client={client}>
-//     <Router>
-//         <>
-//             <Navigation />
-//             <Switch>
-//                 <Route path="/" element={< Homepage />} />
-//                 <Route path="/dashboard" element={ <Dashboard />} />
-//                 <Route
-//                     render={() => (
-//                         <h1 className="display-2">Wrong page!</h1>
-//                     )}
-//                 />
-//             </Switch>
-//         </>
-//     </Router>
-// </ApolloProvider>
-// );
-
-
-
-    <div className="App">
-      < Navigation />
-      < Homepage />
-      < Dashboard />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to my Service Tracker App!!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
+    <ApolloProvider client={client}>
+      <Router>
+        <>
+        <Navigation />
+        <Switch>
+           <Route exact path="/" component={Homepage} />
+           <Route exact path="/dashboard" component={Dashboard} />
+           <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
+        </Switch>
+        </>
+      </Router>
+    </ApolloProvider>
   );
+
+  // <div className="App">
+  //   < Navigation />
+  //   < Homepage />
+  //   < Dashboard />
+  //   {/* <header className="App-header">
+  //     <img src={logo} className="App-logo" alt="logo" />
+  //     <p>
+  //       Welcome to my Service Tracker App!!
+  //     </p>
+  //     <a
+  //       className="App-link"
+  //       href="https://reactjs.org"
+  //       target="_blank"
+  //       rel="noopener noreferrer"
+  //     >
+  //       Learn React
+  //     </a>
+  //   </header> */}
+  // </div>
 }
 
 export default App;
